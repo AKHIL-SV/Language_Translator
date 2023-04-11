@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //===== key =====//
-const String apiKey = '1a7836c8e7mshb5172e683cd1975p1259bdjsn052435532c46';
+const String apiKey = '7be1777aa3mshcaab042d403f000p1c3a18jsn4c2dd5a01324';
 const String apiHost = 'google-translate1.p.rapidapi.com';
 const String encodingType = 'application/json';
 const String baseUrl =

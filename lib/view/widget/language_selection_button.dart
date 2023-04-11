@@ -34,6 +34,8 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
     }
   }
 
+  String searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
@@ -88,7 +90,11 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
                               color: Colors.white,
                             ),
                           ),
-                          onChanged: (value) {}),
+                          onChanged: (value) {
+                            setState(() {
+                              searchQuery = value;
+                            });
+                          }),
                       const SizedBox(
                         height: 10,
                       ),
@@ -101,55 +107,65 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
                       ),
                       Expanded(
                         child: _isloading
-                            ? ListView.separated(
-                                itemCount:
-                                    languages?.data.languages.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  return Material(
-                                    type: MaterialType.transparency,
-                                    child: ListTile(
-                                      tileColor: kPrimaryColor,
-                                      selectedTileColor: kOrangeColor,
-                                      selected: (widget.isInputButton &&
-                                              languages!.data.languages[index]
-                                                      .name ==
-                                                  language
-                                                      .inputLanguage?.name) ||
-                                          (!widget.isInputButton &&
-                                              languages!.data.languages[index]
-                                                      .name ==
-                                                  language
-                                                      .outputLanguage?.name),
-                                      title: Text(
-                                        languages!.data.languages[index].name,
-                                        style: const TextStyle(
-                                            color: Colors.white70),
+                            ? Builder(builder: (context) {
+                                final lang = languages!.data;
+                                final filteredLang = searchQuery.isEmpty
+                                    ? lang.languages
+                                    : lang.languages
+                                        .where((language) => language.name
+                                            .toLowerCase()
+                                            .contains(searchQuery
+                                                .trim()
+                                                .toLowerCase()))
+                                        .toList();
+                                return ListView.separated(
+                                  itemCount: filteredLang.length,
+                                  itemBuilder: (context, index) {
+                                    return Material(
+                                      type: MaterialType.transparency,
+                                      child: ListTile(
+                                        tileColor: kPrimaryColor,
+                                        selectedTileColor: kOrangeColor,
+                                        selected: (widget.isInputButton &&
+                                                filteredLang[index].name ==
+                                                    language
+                                                        .inputLanguage?.name) ||
+                                            (!widget.isInputButton &&
+                                                filteredLang[index].name ==
+                                                    language
+                                                        .outputLanguage?.name),
+                                        title: Text(
+                                          filteredLang[index].name,
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        onTap: () {
+                                          widget.isInputButton
+                                              ? language.setInputLanguage(
+                                                  filteredLang[index])
+                                              : language.setOutputLanguage(
+                                                  filteredLang[index]);
+                                          searchQuery = '';
+                                          Navigator.pop(context);
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
                                       ),
-                                      onTap: () {
-                                        widget.isInputButton
-                                            ? language.setInputLanguage(
-                                                languages!
-                                                    .data.languages[index])
-                                            : language.setOutputLanguage(
-                                                languages!
-                                                    .data.languages[index]);
-                                        Navigator.pop(context);
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                separatorBuilder: (ctx, index) =>
-                                    const SizedBox(
-                                  height: 15,
-                                ),
-                              )
+                                    );
+                                  },
+                                  separatorBuilder: (ctx, index) =>
+                                      const SizedBox(
+                                    height: 15,
+                                  ),
+                                );
+                              })
                             : const Center(
                                 child: CircularProgressIndicator(
-                                color: kOrangeColor,
-                              )),
+                                  color: kOrangeColor,
+                                ),
+                              ),
                       )
                     ],
                   ),
