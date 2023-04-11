@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:language_translator/view/widget/language_selection_button.dart';
 import '../constant.dart';
-import '../services/language_api.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,12 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    LanguageGet().getLanguages();
-    super.initState();
-  }
-
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _outputController = TextEditingController();
 
