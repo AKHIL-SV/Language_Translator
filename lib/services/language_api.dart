@@ -2,7 +2,6 @@ import '../model/language_model.dart';
 import 'package:http/http.dart' as http;
 import '../constant.dart';
 
-
 class LanguageGet {
   Future<LanguageModel> getLanguages() async {
     var headers = {
@@ -21,7 +20,7 @@ class LanguageGet {
         throw Exception('Failed to load languages');
       }
     } catch (e) {
-      throw Exception('Failed to connect to the server');
+      throw Exception('e');
     }
   }
 }
