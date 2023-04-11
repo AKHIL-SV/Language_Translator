@@ -44,7 +44,7 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
             minimumSize: const Size(120, 40),
             maximumSize: const Size(120, 40),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           onPressed: () {
@@ -52,7 +52,7 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
               context: context,
               builder: (context) {
                 return Container(
-                  height: 500,
+                  height: MediaQuery.of(context).size.height * 0.84,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Color(0xFF2C2E2F),
@@ -100,16 +100,26 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
                         height: 10,
                       ),
                       Expanded(
-                        child: ListView.separated(
-                          itemCount: languages?.data.languages.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return _isloading
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: kPrimaryColor,
-                                    ),
+                        child: _isloading
+                            ? ListView.separated(
+                                itemCount:
+                                    languages?.data.languages.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  return Material(
+                                    type: MaterialType.transparency,
                                     child: ListTile(
+                                      tileColor: kPrimaryColor,
+                                      selectedTileColor: kOrangeColor,
+                                      selected: (widget.isInputButton &&
+                                              languages!.data.languages[index]
+                                                      .name ==
+                                                  language
+                                                      .inputLanguage?.name) ||
+                                          (!widget.isInputButton &&
+                                              languages!.data.languages[index]
+                                                      .name ==
+                                                  language
+                                                      .outputLanguage?.name),
                                       title: Text(
                                         languages!.data.languages[index].name,
                                         style: const TextStyle(
@@ -126,19 +136,20 @@ class _LanguageSelectionButtonState extends State<LanguageSelectionButton> {
                                         Navigator.pop(context);
                                       },
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
-                                  )
-                                : const Center(
-                                    child: CircularProgressIndicator(
-                                        color: Colors.white60),
                                   );
-                          },
-                          separatorBuilder: (ctx, index) => const SizedBox(
-                            height: 15,
-                          ),
-                        ),
+                                },
+                                separatorBuilder: (ctx, index) =>
+                                    const SizedBox(
+                                  height: 15,
+                                ),
+                              )
+                            : const Center(
+                                child: CircularProgressIndicator(
+                                color: kOrangeColor,
+                              )),
                       )
                     ],
                   ),

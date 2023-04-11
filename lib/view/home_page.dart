@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     TextFormField(
                         controller: _inputController,
-                        cursorColor: const Color(0xFFD4AF37),
+                        cursorColor: kOrangeColor,
                         minLines: 6,
                         maxLines: 8,
                         maxLength: 2300,
