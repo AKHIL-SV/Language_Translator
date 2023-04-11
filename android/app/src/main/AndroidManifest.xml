@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.language_translator">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="language_translator"
         android:name="${applicationName}"
