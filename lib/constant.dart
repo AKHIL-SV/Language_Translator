@@ -7,6 +7,7 @@ const String encodingType = 'application/json';
 const String baseUrl =
     'https://google-translate1.p.rapidapi.com/language/translate/v2';
 const String languagesEndpoint = '/languages?target=en';
+const String detectEndpoint = '/detect';
 
 //===== colors=====//
 
