@@ -3,6 +3,8 @@ import 'package:language_translator/view/widget/language_selection_button.dart';
 import 'package:provider/provider.dart';
 import '../constant.dart';
 import '../controller/provider.dart';
+import '../model/translate_model.dart';
+import '../services/translate_api.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +16,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _outputController = TextEditingController();
+  translate(
+      {required String inputText,
+      required String outputLang,
+      String inputLang = ""}) async {
+    TranslatedModel response = await TranslateRequest().getTranslated(
+        text: inputText, toLang: outputLang, fromLang: inputLang);
+    final translatedText = response.data.translations[0].translatedText;
+    setState(() {
+      _outputController.text = translatedText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,8 +80,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Translate From ',
                           style: TextStyle(
                             color: Colors.white38,
@@ -75,8 +89,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          '(Select a language)',
-                          style: TextStyle(
+                          '(${language.inputLanguage?.name ?? 'Select a language'})',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: white,
                           ),
@@ -87,29 +101,38 @@ class _HomePageState extends State<HomePage> {
                       height: 15,
                     ),
                     TextFormField(
-                      controller: _inputController,
-                      cursorColor: const Color(0xFFD4AF37),
-                      minLines: 6,
-                      maxLines: 8,
-                      maxLength: 2300,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white60,
-                      ),
-                    ),
+                        controller: _inputController,
+                        cursorColor: const Color(0xFFD4AF37),
+                        minLines: 6,
+                        maxLines: 8,
+                        maxLength: 2300,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white60,
+                        ),
+                        enabled: language.outputLanguage?.language != null,
+                        onChanged: (value) {
+                          if (language.outputLanguage?.language != null) {
+                            translate(
+                                inputText: value,
+                                outputLang: language.outputLanguage!.language,
+                                inputLang:
+                                    language.inputLanguage?.language ?? "");
+                          }
+                        }),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text(
-                          'Translate From ',
+                      children: [
+                        const Text(
+                          'Translate To ',
                           style: TextStyle(
                             color: Colors.white38,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
-                          '(Select a language)',
-                          style: TextStyle(
+                          '(${language.outputLanguage?.name ?? 'Select a language'})',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: white,
                           ),
