@@ -11,7 +11,7 @@ const String languagesEndpoint = '/languages?target=en';
 //===== colors=====//
 
 const Color kPrimaryColor = Color(0xFF131517);
-const Color kSecondaryColor = Color(0xFF232527);
+const Color kSecondaryColor = Color(0xFF2C2E2F);
 const Color white = Colors.white;
 //===== theme =====//
 

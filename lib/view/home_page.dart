@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:language_translator/view/widget/language_selection_button.dart';
 import '../constant.dart';
 import '../services/language_api.dart';
 
@@ -47,41 +48,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kSecondaryColor,
-                        minimumSize: const Size(120, 40),
-                        maximumSize: const Size(120, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Translate From',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const Icon(
+                  children: const [
+                    LanguageSelectionButton(buttonLabel: 'Translate \nFrom'),
+                    Icon(
                       Icons.compare_arrows,
                       color: Colors.white60,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kSecondaryColor,
-                        minimumSize: const Size(120, 40),
-                        maximumSize: const Size(120, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Translate \nTo',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    LanguageSelectionButton(buttonLabel: 'Translate \nTo')
                   ],
                 ),
                 const SizedBox(
