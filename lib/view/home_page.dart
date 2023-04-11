@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constant.dart';
 import '../services/language_api.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,12 +13,152 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     LanguageGet().getLanguages();
-
     super.initState();
   }
 
+  final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _outputController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Text Translation',
+                  style: TextStyle(
+                    color: white,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Divider(
+                  color: Colors.white24,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kSecondaryColor,
+                        minimumSize: const Size(120, 40),
+                        maximumSize: const Size(120, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Translate From',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.compare_arrows,
+                      color: Colors.white60,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kSecondaryColor,
+                        minimumSize: const Size(120, 40),
+                        maximumSize: const Size(120, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Translate \nTo',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text(
+                      'Translate From ',
+                      style: TextStyle(
+                        color: Colors.white38,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      '(Select a language)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: white,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  controller: _inputController,
+                  cursorColor: const Color(0xFFD4AF37),
+                  minLines: 6,
+                  maxLines: 8,
+                  maxLength: 2300,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white60,
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text(
+                      'Translate From ',
+                      style: TextStyle(
+                        color: Colors.white38,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      '(Select a language)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: white,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  enabled: false,
+                  controller: _outputController,
+                  minLines: 6,
+                  maxLines: 8,
+                  maxLength: 2300,
+                  cursorColor: const Color(0xFFD4AF37),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white60,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

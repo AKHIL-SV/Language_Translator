@@ -5,12 +5,12 @@ import '../constant.dart';
 class LanguageGet {
   Future<LanguageModel> getLanguages() async {
     var headers = {
-      'Accept-Encoding': 'application/json',
-      'X-RapidAPI-Key': ApiConstants.apiKey,
-      'X-RapidAPI-Host': ApiConstants.apiHost
+      'Accept-Encoding': encodingType,
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': apiHost
     };
     var client = http.Client();
-    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.languagesEndpoint);
+    var url = Uri.parse(baseUrl + languagesEndpoint);
     try {
       var response = await client.get(url, headers: headers);
       if (response.statusCode == 200) {

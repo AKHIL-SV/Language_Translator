@@ -6,13 +6,13 @@ class TranslateRequest {
   Future<TranslatedModel> getTranslated(
       {required String text, required String toLang, String? fromLang}) async {
     var headers = {
-      'Accept-Encoding': 'application/json',
-      'X-RapidAPI-Key': ApiConstants.apiKey,
-      'X-RapidAPI-Host': ApiConstants.apiHost,
+      'Accept-Encoding': encodingType,
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': apiHost,
       'content-type': 'application/x-www-form-urlencoded'
     };
 
-    var url = Uri.parse(ApiConstants.baseUrl);
+    var url = Uri.parse(baseUrl);
     var request = http.Request('POST', url);
     request.bodyFields = {
       'q': text,
