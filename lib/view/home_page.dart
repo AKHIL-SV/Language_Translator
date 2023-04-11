@@ -5,6 +5,7 @@ import '../constant.dart';
 import '../controller/provider.dart';
 import '../model/translate_model.dart';
 import '../services/translate_api.dart';
+import 'language_detection_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,12 +41,31 @@ class _HomePageState extends State<HomePage> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Text Translation',
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 18,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Text Translation',
+                          style: TextStyle(
+                            color: white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LanguageDetectionScreen(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.search_rounded,
+                            color: Colors.white54,
+                          ),
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 5,
@@ -103,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                     TextFormField(
                         controller: _inputController,
                         cursorColor: kOrangeColor,
-                        minLines: 6,
+                        minLines: 5,
                         maxLines: 8,
                         maxLength: 2300,
                         style: const TextStyle(
@@ -145,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                     TextFormField(
                       enabled: false,
                       controller: _outputController,
-                      minLines: 6,
+                      minLines: 5,
                       maxLines: 8,
                       maxLength: 2300,
                       cursorColor: const Color(0xFFD4AF37),
